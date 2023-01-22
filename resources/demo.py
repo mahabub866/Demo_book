@@ -21,45 +21,108 @@ blp = Blueprint("Examples", "Examples", description="Operations on Examples")
 sampleJson = """{"key" : "value", "myarray" : [39, 323, 83, 382, 102], "objects" : {"name" : "Anthony"}}"""
 @blp.route("/example")
 class demo(MethodView):
-    # def get(self):
-    #     example1 = Example(json_column={"key" : "value", "myarray" : [39, 323, 83, 382, 102], "objects" : {"name" : "Anthony"}})
-        # example2 = Example(json_column={"key" : "newvalue", "myarray" : [23, 676, 45, 88, 99], "objects" : {"name" : "Brian"}})
-    #     db.session.add(example1)
-    #     db.session.commit()
-    #     return " Complete succesfully"
-    # @blp.response(200, PlainExampleSchema())
     def get(self):
-        dbdata= Example.query.first()
-        print(dbdata.json_column)
+        example1 = Example(json_column={"key" : "value", "myarray" : [39, 323, 83, 382, 102], "objects" : {"name" : "Anthony"}})
+        # example2 = Example(json_column={"key" : "newvalue", "myarray" : [23, 676, 45, 88, 99], "objects" : {"name" : "Brian"}})
+        db.session.add(example1)
+        db.session.commit()
+        return " Complete succesfully"
+    # @blp.response(200, PlainExampleSchema())
+    # def get(self):
+    #     dbdata= Example.query.first()
+    #     print(dbdata.json_column)
         
-        x=dbdata.json_column
-        print(type(x))
-        lol=json.dumps(x)
-        y=str(x)
-        print(type(x),'xxxxxxxxxxxxxxxxxxxxxx')
-        print(x,'xxxxxxxxxxxxxxxxxxxxxx')
-        print(type(y),'yyyyyyyyyyyyyyyyyyyyyy')
-        print(y,'yyyyyyyyyyyyyyyyyyyyyy')
-        print(x)
-        data2 = json.dumps(y)
-        data3 = json.loads(data2)
-        print(data3,'222222222')
-        return lol
+    #     x=dbdata.json_column
+    #     print(type(x))
+    #     lol=json.dumps(x)
+    #     y=str(x)
+    #     print(type(x),'xxxxxxxxxxxxxxxxxxxxxx')
+    #     print(x,'xxxxxxxxxxxxxxxxxxxxxx')
+    #     print(type(y),'yyyyyyyyyyyyyyyyyyyyyy')
+    #     print(y,'yyyyyyyyyyyyyyyyyyyyyy')
+    #     print(x)
+    #     data2 = json.dumps(y)
+    #     data3 = json.loads(data2)
+    #     print(data3,'222222222')
+    #     return lol
+
+    # def put(self):
+
+    #     jsonData = '{"ID":"123", "Name": "Hamza"}'
+    #     data = json.loads(jsonData)
+    #     print(type(data))
+    #     newData = {"DOB": "22-10-2001"}
+    #     data.update(newData)
+    #     print(data)
+        
+    #     return jsonify({'message' : 'The user has been promoted!'})
+
 
     def put(self):
-        dbdata = Example.query.first()
-        x=dbdata.json_column
-        y=dbdata.id
-        z=x['objects']['name']
-        print(x['objects']['name'])
-        print(y)
-        if x['objects']['name']=="Anthony":
-            db.session.update(z="nazmul")
-            print(x['objects']['name'])
-            db.session.commit()
+        # example1 = Example(json_column={"key" : "value", "myarray" : [39, 323, 83, 382, 102], "objects" : {"name" : "Anthony"}})
 
-            print(';lol')
-        return x
+        # users =  Example.query.first()
+        users = db.session.query(Example).filter(Example.id==4).first()
+        # x="mak"
+        print(users.json_column)
+        
+        id = users.id
+        key=users.json_column["key"]
+        myarray=users.json_column["myarray"]
+        objects=users.json_column["objects"]
+        name=users.json_column["objects"]['name']
+        print(id)
+        print(key)
+        print(myarray)
+        print(objects)
+        print(name)
+        # user_data['name'] = users.json_column['objects']['name']
+        users.json_column={"key":key,"myarray":myarray,"objects":{"name":"Mahabub"}}
+        print(users.json_column,'..............')
+       
+        # print(users.json_column['objects']['name'])
+        # print(users.book_info,'////')
+        # user_data['name'] ="abdullah"
+
+        # output = []
+        
+        # output.append(user_data)
+        db.session.add(users)
+        db.session.commit()
+
+        return "update sucvcesfully"
+
+        
+        
+
+
+        # db.session.commit()
+        # print('success')
+        
+        
+        
+        
+        
+        
+        
+        # output = []
+        
+        # output.append(user_data)
+
+        # return jsonify({'users' : output})
+        # dbdata = Example.query.first()
+        # x=dbdata.json_column
+        # y=dbdata.id
+        # z=x['objects']['name']
+        # print(x['objects']['name'])
+        # print(y)
+        # if x['objects']['name']=="Anthony":
+        #     db.session.update(z="nazmul")
+        #     print(x['objects']['name'])
+        #     db.session.commit()
+
+        #     print(';lol')
+        # return x
         
         
         # if y==1:
