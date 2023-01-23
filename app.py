@@ -12,7 +12,7 @@ from flask_migrate import Migrate
 from blocklist import BLOCKLIST
 from resources.book import blp as BookBlueprint
 from resources.demo import blp as ExamplesBlueprint
-# from resources.store import blp as StoreBlueprint
+from resources.rba import blp as RbaBlueprint
 # from resources.tag import blp as TagBlueprint
 # from resources.user import blp as UserBlueprint
 # from resources.test import blp as TestBlueprint
@@ -123,6 +123,7 @@ def create_app(db_url=None):
 
     api.register_blueprint(BookBlueprint)
     api.register_blueprint(ExamplesBlueprint)
+    api.register_blueprint(RbaBlueprint)
     # api.register_blueprint(TagBlueprint)
     # api.register_blueprint(UserBlueprint)
     # api.register_blueprint(TestBlueprint)

@@ -11,7 +11,7 @@ from sqlalchemy.types import JSON
 
 from sqlalchemy.dialects.postgresql import array
 from sqlalchemy.dialects import postgresql
-from sqlalchemy import select, func
+from sqlalchemy import select, func,asc, desc
 
 blp = Blueprint("Examples", "Examples", description="Operations on Examples")
 
@@ -21,30 +21,30 @@ blp = Blueprint("Examples", "Examples", description="Operations on Examples")
 sampleJson = """{"key" : "value", "myarray" : [39, 323, 83, 382, 102], "objects" : {"name" : "Anthony"}}"""
 @blp.route("/example")
 class demo(MethodView):
-    def get(self):
-        example1 = Example(json_column={"key" : "value", "myarray" : [39, 323, 83, 382, 102], "objects" : {"name" : "Anthony"}})
-        # example2 = Example(json_column={"key" : "newvalue", "myarray" : [23, 676, 45, 88, 99], "objects" : {"name" : "Brian"}})
-        db.session.add(example1)
-        db.session.commit()
-        return " Complete succesfully"
-    # @blp.response(200, PlainExampleSchema())
     # def get(self):
-    #     dbdata= Example.query.first()
-    #     print(dbdata.json_column)
+    #     example1 = Example(json_column={"key" : "value", "myarray" : [39, 323, 83, 382, 102], "objects" : {"name" : "Anthony"}})
+    #     # example2 = Example(json_column={"key" : "newvalue", "myarray" : [23, 676, 45, 88, 99], "objects" : {"name" : "Brian"}})
+    #     db.session.add(example1)
+    #     db.session.commit()
+    #     return " Complete succesfully"
+    # @blp.response(200, PlainExampleSchema())
+    def get(self):
+        dbdata= Example.query.first()
+        print(dbdata.json_column)
         
-    #     x=dbdata.json_column
-    #     print(type(x))
-    #     lol=json.dumps(x)
-    #     y=str(x)
-    #     print(type(x),'xxxxxxxxxxxxxxxxxxxxxx')
-    #     print(x,'xxxxxxxxxxxxxxxxxxxxxx')
-    #     print(type(y),'yyyyyyyyyyyyyyyyyyyyyy')
-    #     print(y,'yyyyyyyyyyyyyyyyyyyyyy')
-    #     print(x)
-    #     data2 = json.dumps(y)
-    #     data3 = json.loads(data2)
-    #     print(data3,'222222222')
-    #     return lol
+        x=dbdata.json_column
+        print(type(x))
+        lol=json.dumps(x)
+        y=str(x)
+        print(type(x),'xxxxxxxxxxxxxxxxxxxxxx')
+        print(x,'xxxxxxxxxxxxxxxxxxxxxx')
+        print(type(y),'yyyyyyyyyyyyyyyyyyyyyy')
+        print(y,'yyyyyyyyyyyyyyyyyyyyyy')
+        print(x)
+        data2 = json.dumps(y)
+        data3 = json.loads(data2)
+        print(data3,'222222222')
+        return lol
 
     # def put(self):
 
@@ -58,6 +58,46 @@ class demo(MethodView):
     #     return jsonify({'message' : 'The user has been promoted!'})
 
 
+    # def put(self):
+    #     # example1 = Example(json_column={"key" : "value", "myarray" : [39, 323, 83, 382, 102], "objects" : {"name" : "Anthony"}})
+
+    #     # users =  Example.query.first()
+    #     users = db.session.query(Example).filter(Example.id==4).first()
+    #     # x="mak"
+    #     print(users.json_column)
+    #     lol=[]
+    #     id = users.id
+    #     key=users.json_column["key"]
+    #     myarray=users.json_column["myarray"]
+    #     objects=users.json_column["objects"]
+    #     name=users.json_column["objects"]['name']
+    #     print(id)
+    #     print(key)
+    #     print(myarray)
+    #     print(type(myarray))
+    #     print(objects)
+    #     print(name)
+    #     # myarray.insert(0,107)
+    #     print(myarray,'//')
+    #     # user_data['name'] = users.json_column['objects']['name']          objects name change
+    #     users.json_column={"key":key,"myarray":myarray,"objects":{"name":"nazmul"}}  # only name filed change
+    #     # users.json_column={"key":key,"myarray":myarray,"objects":{"name":name}}  # only array filed value add
+    #     print(users.json_column,'..............')
+    #     users = db.session.update(Example).filter(Example.id==4).first()
+    #     # print(users.json_column['objects']['name'])
+    #     # print(users.book_info,'////')
+    #     # user_data['name'] ="abdullah"
+
+    #     # output = []
+        
+    #     # output.append(user_data)
+    #     db.session.add(users)
+    #     db.session.commit()
+
+    #     return "update sucvcesfully"
+
+        
+        
     def put(self):
         # example1 = Example(json_column={"key" : "value", "myarray" : [39, 323, 83, 382, 102], "objects" : {"name" : "Anthony"}})
 
@@ -65,7 +105,7 @@ class demo(MethodView):
         users = db.session.query(Example).filter(Example.id==4).first()
         # x="mak"
         print(users.json_column)
-        
+        lol=[]
         id = users.id
         key=users.json_column["key"]
         myarray=users.json_column["myarray"]
@@ -74,12 +114,17 @@ class demo(MethodView):
         print(id)
         print(key)
         print(myarray)
+        print(type(myarray))
         print(objects)
         print(name)
-        # user_data['name'] = users.json_column['objects']['name']
-        users.json_column={"key":key,"myarray":myarray,"objects":{"name":"Mahabub"}}
+        myarray.insert(0,1111)
+        print(myarray,'//')
+        # user_data['name'] = users.json_column['objects']['name']          objects name change
+        # users.json_column={"key":key,"myarray":myarray,"objects":{"name":"nazmul"}}  # only name filed change
+        # users.json_column={"key":key,"myarray":myarray,"objects":{"name":name}}  # only array filed value add
         print(users.json_column,'..............')
-       
+        user = Example.query.filter(Example.id==4).update({"json_column":{"key":key,"myarray":myarray,"objects":{"name":name}}})
+        print(user)
         # print(users.json_column['objects']['name'])
         # print(users.book_info,'////')
         # user_data['name'] ="abdullah"
@@ -87,7 +132,7 @@ class demo(MethodView):
         # output = []
         
         # output.append(user_data)
-        db.session.add(users)
+        # db.session.add(users)
         db.session.commit()
 
         return "update sucvcesfully"
@@ -174,7 +219,7 @@ class demo(MethodView):
 @blp.route('/user', methods=['GET'])
 
 def get_all_users():
-    users = Example.query.all()
+    users = Example.query.order_by(asc(Example.id)).all()
     output = []
     for user in users:
         user_data = {}

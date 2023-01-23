@@ -9,6 +9,22 @@ class PlainBookSchema(Schema):
     rating=fields.Str(required=True)
     user_number=fields.Str(required=True)
     book_info = JSONSchema()
+
+class PlainRba1Schema(Schema):
+    id = fields.Int(dump_only=True)
+    name = fields.Str(required=True)
+    active = fields.Boolean(required=True)
+    role = JSONSchema()
+
+class PlainRbaSchema(Schema):
+    id = fields.Int(dump_only=True)
+    name = fields.Str(required=True)
+    active = fields.Boolean(required=False)
+    user_management=fields.Boolean(required=False,default=None)
+    account_management=fields.Boolean(required=False,default=None)
+    store_management=fields.Boolean(required=False,default=None)
+    support_management=fields.Boolean(required=False,default=None)
+    role = JSONSchema()
     
 
 class PlainBook1Schema(Schema):
@@ -32,3 +48,11 @@ class BookRatingUpdateSchema(Schema):
     book_info = JSONSchema()
     id = fields.Int()
     
+class RoleUpdateSchema(Schema):
+   
+    user_management = fields.Boolean()
+    account_management = fields.Boolean()
+    support_management = fields.Boolean()
+    store_management = fields.Boolean()
+    
+role_schema=RoleUpdateSchema()
