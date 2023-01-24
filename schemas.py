@@ -50,9 +50,24 @@ class BookRatingUpdateSchema(Schema):
     
 class RoleUpdateSchema(Schema):
    
-    user_management = fields.Boolean()
-    account_management = fields.Boolean()
-    support_management = fields.Boolean()
-    store_management = fields.Boolean()
+    user_management = fields.Boolean(default=None)
+    account_management = fields.Boolean(default=None)
+    support_management = fields.Boolean(default=None)
+    store_management = fields.Boolean(default=None)
+
+class RoleSchema(Schema):
+    name=fields.Str()
+    active = fields.Boolean(default=False)
+    user_management = fields.Boolean(default=None)
+    account_management = fields.Boolean(default=None)
+    support_management = fields.Boolean(default=None)
+    store_management = fields.Boolean(default=None)
+
+class RoleStatusUpdateSchema(Schema):
+   
+    active = fields.Boolean()
+   
     
 role_schema=RoleUpdateSchema()
+role_schema_main=RoleSchema()
+role_status_schema=RoleStatusUpdateSchema()

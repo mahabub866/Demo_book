@@ -244,3 +244,206 @@ def get_all_users():
     output.append(user_data)
 
     return jsonify({'users' : output})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    # role er demo code   
+
+
+
+
+
+
+
+
+
+
+
+    # data.active = True
+    # db.session.commit()
+
+    # return jsonify({'message' : 'Todo item has been completed!'}) 
+
+    # output_data = {}
+    # output_data['id'] = data.id
+    # output_data['name'] = data.name
+    # output_data['active'] = data.active
+    # output_data['role'] = data.role
+    # user_management= data.role["user_management"]
+    # store_management= data.role["store_management"]
+    # support_management= data.role["support_management"]
+    # account_management= data.role["account_management"]
+    # print(user_management,store_management,support_management,account_management)
+
+    # return jsonify(output_data)
+
+  
+        # example1 = Example(json_column={"key" : "value", "myarray" : [39, 323, 83, 382, 102], "objects" : {"name" : "Anthony"}})
+
+        # users =  Example.query.first()
+        # users = db.session.query(Example).filter(Example.id==4).first()
+        # x="mak"
+        # print(users.json_column)
+        # lol=[]
+        # id = users.id
+        # key=users.json_column["key"]
+        # myarray=users.json_column["myarray"]
+        # objects=users.json_column["objects"]
+        # name=users.json_column["objects"]['name']
+        # print(id)
+        # print(key)
+        # print(myarray)
+        # print(type(myarray))
+        # print(objects)
+        # print(name)
+        # myarray.insert(0,1111)
+        # print(myarray,'//')
+        # # user_data['name'] = users.json_column['objects']['name']          objects name change
+        # # users.json_column={"key":key,"myarray":myarray,"objects":{"name":"nazmul"}}  # only name filed change
+        # # users.json_column={"key":key,"myarray":myarray,"objects":{"name":name}}  # only array filed value add
+        # print(users.json_column,'..............')
+        # user = Example.query.filter(Example.id==4).update({"json_column":{"key":key,"myarray":myarray,"objects":{"name":name}}})
+        # print(user)
+        # print(users.json_column['objects']['name'])
+        # print(users.book_info,'////')
+        # user_data['name'] ="abdullah"
+
+        # output = []
+        
+        # output.append(user_data)
+        # db.session.add(users)
+        # db.session.commit()
+
+        # return "update sucvcesfully"
+
+    # @blp.response(200, PlainExampleSchema())
+    # def get(self):
+    #     dbdata= Example.query.first()
+    #     print(dbdata.json_column)
+        
+    #     x=dbdata.json_column
+    #     print(type(x))
+    #     lol=json.dumps(x)
+    #     y=str(x)
+    #     print(type(x),'xxxxxxxxxxxxxxxxxxxxxx')
+    #     print(x,'xxxxxxxxxxxxxxxxxxxxxx')
+    #     print(type(y),'yyyyyyyyyyyyyyyyyyyyyy')
+    #     print(y,'yyyyyyyyyyyyyyyyyyyyyy')
+    #     print(x)
+    #     data2 = json.dumps(y)
+    #     data3 = json.loads(data2)
+    #     print(data3,'222222222')
+    #     return lol
+
+    # def put(self):
+
+    #     jsonData = '{"ID":"123", "Name": "Hamza"}'
+    #     data = json.loads(jsonData)
+    #     print(type(data))
+    #     newData = {"DOB": "22-10-2001"}
+    #     data.update(newData)
+    #     print(data)
+        
+    #     return jsonify({'message' : 'The user has been promoted!'})
+
+
+    # def put(self):
+    #     # example1 = Example(json_column={"key" : "value", "myarray" : [39, 323, 83, 382, 102], "objects" : {"name" : "Anthony"}})
+
+    #     # users =  Example.query.first()
+    #     users = db.session.query(Example).filter(Example.id==4).first()
+    #     # x="mak"
+    #     print(users.json_column)
+    #     lol=[]
+    #     id = users.id
+    #     key=users.json_column["key"]
+    #     myarray=users.json_column["myarray"]
+    #     objects=users.json_column["objects"]
+    #     name=users.json_column["objects"]['name']
+    #     print(id)
+    #     print(key)
+    #     print(myarray)
+    #     print(type(myarray))
+    #     print(objects)
+    #     print(name)
+    #     # myarray.insert(0,107)
+    #     print(myarray,'//')
+    #     # user_data['name'] = users.json_column['objects']['name']          objects name change
+    #     users.json_column={"key":key,"myarray":myarray,"objects":{"name":"nazmul"}}  # only name filed change
+    #     # users.json_column={"key":key,"myarray":myarray,"objects":{"name":name}}  # only array filed value add
+    #     print(users.json_column,'..............')
+    #     users = db.session.update(Example).filter(Example.id==4).first()
+    #     # print(users.json_column['objects']['name'])
+    #     # print(users.book_info,'////')
+    #     # user_data['name'] ="abdullah"
+
+    #     # output = []
+        
+    #     # output.append(user_data)
+    #     db.session.add(users)
+    #     db.session.commit()
+
+    #     return "update sucvcesfully"
+
+        
+        
+    # def put(self):
+    #     # example1 = Example(json_column={"key" : "value", "myarray" : [39, 323, 83, 382, 102], "objects" : {"name" : "Anthony"}})
+
+    #     # users =  Example.query.first()
+    #     users = db.session.query(Example).filter(Example.id==4).first()
+    #     # x="mak"
+    #     print(users.json_column)
+    #     lol=[]
+    #     id = users.id
+    #     key=users.json_column["key"]
+    #     myarray=users.json_column["myarray"]
+    #     objects=users.json_column["objects"]
+    #     name=users.json_column["objects"]['name']
+    #     print(id)
+    #     print(key)
+    #     print(myarray)
+    #     print(type(myarray))
+    #     print(objects)
+    #     print(name)
+    #     myarray.insert(0,1111)
+    #     print(myarray,'//')
+    #     # user_data['name'] = users.json_column['objects']['name']          objects name change
+    #     # users.json_column={"key":key,"myarray":myarray,"objects":{"name":"nazmul"}}  # only name filed change
+    #     # users.json_column={"key":key,"myarray":myarray,"objects":{"name":name}}  # only array filed value add
+    #     print(users.json_column,'..............')
+    #     user = Example.query.filter(Example.id==4).update({"json_column":{"key":key,"myarray":myarray,"objects":{"name":name}}})
+    #     print(user)
+    #     # print(users.json_column['objects']['name'])
+    #     # print(users.book_info,'////')
+    #     # user_data['name'] ="abdullah"
+
+    #     # output = []
+        
+    #     # output.append(user_data)
+    #     # db.session.add(users)
+    #     db.session.commit()
+
+    #     return "update sucvcesfully"
+
+        

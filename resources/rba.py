@@ -4,7 +4,7 @@ from flask import jsonify,request
 from sqlalchemy.exc import SQLAlchemyError, IntegrityError
 from db import db
 from models import RBA
-from schemas import PlainBook1Schema,PlainBookSchema, PlainRba1Schema,PlainRbaSchema,role_schema
+from schemas import role_schema_main,PlainBookSchema, PlainRba1Schema,PlainRbaSchema,role_schema,role_status_schema
 import json
 from marshmallow import ValidationError
 from sqlalchemy.types import JSON
@@ -55,6 +55,40 @@ class Role(MethodView):
 
     
 
+@blp.route('/get-role', methods=['POST'])
+def get_role():
+
+    if (request.data):
+            json_data=request.get_json()
+            
+            if not json_data:
+                return {"message": "No input data provided"}, 400
+            try:
+                request_data = role_schema_main.load(json_data)
+                data = RBA.query.filter_by(name=request_data['name']).first()
+                # print(data,'data')
+                if data:
+                    return {"message": "Name Already Exist"}, 422
+                
+                print(request_data['active'])
+                print(request_data)
+                role = RBA(name=request_data['name'],active=request_data['active'],role={"user_management" : request_data['user_management']  , "account_management":request_data['account_management'] ,"store_management":request_data['store_management'] , "support_management" : request_data['support_management']})
+                # role = request_data
+
+                # print(role)
+
+                db.session.add(role)
+                db.session.commit()
+               
+                return "Create Succesfully"
+            except ValidationError as err:
+                return err.messages, 422
+    else:
+        return "This request has not data",400
+    
+    
+ 
+        
 
 @blp.route('/roles', methods=['GET'])
 def get_all_roles():
@@ -89,11 +123,12 @@ def get_one_role_by_id(role_id):
 
 
 @blp.route('/role/<role_id>', methods=['PUT'])
-
 def get_update_role_by_id(role_id):
     data = RBA.query.filter_by(id=role_id).first()
     print(data.active)
-    if data is not None:
+    if not data:
+        return jsonify({'message' : 'No role found!'})
+    else:
         if (request.data):
             json_data=request.get_json()
             if not json_data:
@@ -101,183 +136,57 @@ def get_update_role_by_id(role_id):
             try:
                 request_data = role_schema.load(json_data)
                 print(request_data)
-                role = RBA(name=data.name,active=data.active,role=request_data)
-                print(role,'......../../.././/./.')
-            # example2 = Example(json_column={"key" : "newvalue", "myarray" : [23, 676, 45, 88, 99], "objects" : {"name" : "Brian"}})
-                db.session.add(role)
+                # role = RBA(name=data.name,active=data.active,role=request_data)
+                user = RBA.query.filter(RBA.id==role_id).update({"role":request_data})
+                # print(user,'......../../.././/./.')
+            
                 db.session.commit()
-                # print(request_data)
-                # print(request_data['account_management'])
-                # print(request_data['store_management'])
+               
                 return "update Sucessfuly"
             except ValidationError as err:
                 return err.messages, 422
         else:
-            return "to request has not data",400
+            return "This request has not data",400
+
+
+@blp.route('/role/status/<role_id>', methods=['PUT'])
+def role_status_update( role_id):
+    data =  data = RBA.query.filter_by(id=role_id).first()
 
     if not data:
         return jsonify({'message' : 'No role found!'})
+    else:
+        if (request.data):
+            json_data=request.get_json()
+            print(json_data)
 
-    # output_data = {}
-    # output_data['id'] = data.id
-    # output_data['name'] = data.name
-    # output_data['active'] = data.active
-    # output_data['role'] = data.role
-    # user_management= data.role["user_management"]
-    # store_management= data.role["store_management"]
-    # support_management= data.role["support_management"]
-    # account_management= data.role["account_management"]
-    # print(user_management,store_management,support_management,account_management)
-
-    # return jsonify(output_data)
-
-  
-        # example1 = Example(json_column={"key" : "value", "myarray" : [39, 323, 83, 382, 102], "objects" : {"name" : "Anthony"}})
-
-        # users =  Example.query.first()
-        # users = db.session.query(Example).filter(Example.id==4).first()
-        # x="mak"
-        # print(users.json_column)
-        # lol=[]
-        # id = users.id
-        # key=users.json_column["key"]
-        # myarray=users.json_column["myarray"]
-        # objects=users.json_column["objects"]
-        # name=users.json_column["objects"]['name']
-        # print(id)
-        # print(key)
-        # print(myarray)
-        # print(type(myarray))
-        # print(objects)
-        # print(name)
-        # myarray.insert(0,1111)
-        # print(myarray,'//')
-        # # user_data['name'] = users.json_column['objects']['name']          objects name change
-        # # users.json_column={"key":key,"myarray":myarray,"objects":{"name":"nazmul"}}  # only name filed change
-        # # users.json_column={"key":key,"myarray":myarray,"objects":{"name":name}}  # only array filed value add
-        # print(users.json_column,'..............')
-        # user = Example.query.filter(Example.id==4).update({"json_column":{"key":key,"myarray":myarray,"objects":{"name":name}}})
-        # print(user)
-        # print(users.json_column['objects']['name'])
-        # print(users.book_info,'////')
-        # user_data['name'] ="abdullah"
-
-        # output = []
-        
-        # output.append(user_data)
-        # db.session.add(users)
-        # db.session.commit()
-
-        # return "update sucvcesfully"
-
-    # @blp.response(200, PlainExampleSchema())
-    # def get(self):
-    #     dbdata= Example.query.first()
-    #     print(dbdata.json_column)
-        
-    #     x=dbdata.json_column
-    #     print(type(x))
-    #     lol=json.dumps(x)
-    #     y=str(x)
-    #     print(type(x),'xxxxxxxxxxxxxxxxxxxxxx')
-    #     print(x,'xxxxxxxxxxxxxxxxxxxxxx')
-    #     print(type(y),'yyyyyyyyyyyyyyyyyyyyyy')
-    #     print(y,'yyyyyyyyyyyyyyyyyyyyyy')
-    #     print(x)
-    #     data2 = json.dumps(y)
-    #     data3 = json.loads(data2)
-    #     print(data3,'222222222')
-    #     return lol
-
-    # def put(self):
-
-    #     jsonData = '{"ID":"123", "Name": "Hamza"}'
-    #     data = json.loads(jsonData)
-    #     print(type(data))
-    #     newData = {"DOB": "22-10-2001"}
-    #     data.update(newData)
-    #     print(data)
-        
-    #     return jsonify({'message' : 'The user has been promoted!'})
+            if not json_data:
+                return {"message": "No input data provided"}, 400
+            try:
+                request_data = role_status_schema.load(json_data)
+                print(request_data["active"])
+        #         # role = RBA(name=data.name,active=data.active,role=request_data)
+                user = RBA.query.filter(RBA.id==role_id).update({"active":request_data['active']})
+                # print(user,'......../../.././/./.')
+            
+                db.session.commit()
+               
+                return "update Sucessfuly"
+            except ValidationError as err:
+                return err.messages, 422
+        else:
+            return "This request has not data",400
 
 
-    # def put(self):
-    #     # example1 = Example(json_column={"key" : "value", "myarray" : [39, 323, 83, 382, 102], "objects" : {"name" : "Anthony"}})
+@blp.route('/todo/<role_id>', methods=['DELETE'])
 
-    #     # users =  Example.query.first()
-    #     users = db.session.query(Example).filter(Example.id==4).first()
-    #     # x="mak"
-    #     print(users.json_column)
-    #     lol=[]
-    #     id = users.id
-    #     key=users.json_column["key"]
-    #     myarray=users.json_column["myarray"]
-    #     objects=users.json_column["objects"]
-    #     name=users.json_column["objects"]['name']
-    #     print(id)
-    #     print(key)
-    #     print(myarray)
-    #     print(type(myarray))
-    #     print(objects)
-    #     print(name)
-    #     # myarray.insert(0,107)
-    #     print(myarray,'//')
-    #     # user_data['name'] = users.json_column['objects']['name']          objects name change
-    #     users.json_column={"key":key,"myarray":myarray,"objects":{"name":"nazmul"}}  # only name filed change
-    #     # users.json_column={"key":key,"myarray":myarray,"objects":{"name":name}}  # only array filed value add
-    #     print(users.json_column,'..............')
-    #     users = db.session.update(Example).filter(Example.id==4).first()
-    #     # print(users.json_column['objects']['name'])
-    #     # print(users.book_info,'////')
-    #     # user_data['name'] ="abdullah"
+def delete_role( role_id):
+    role = RBA.query.filter_by(id=role_id).first()
 
-    #     # output = []
-        
-    #     # output.append(user_data)
-    #     db.session.add(users)
-    #     db.session.commit()
+    if not role:
+        return jsonify({'message' : 'No role found!'})
 
-    #     return "update sucvcesfully"
+    db.session.delete(role)
+    db.session.commit()
 
-        
-        
-    # def put(self):
-    #     # example1 = Example(json_column={"key" : "value", "myarray" : [39, 323, 83, 382, 102], "objects" : {"name" : "Anthony"}})
-
-    #     # users =  Example.query.first()
-    #     users = db.session.query(Example).filter(Example.id==4).first()
-    #     # x="mak"
-    #     print(users.json_column)
-    #     lol=[]
-    #     id = users.id
-    #     key=users.json_column["key"]
-    #     myarray=users.json_column["myarray"]
-    #     objects=users.json_column["objects"]
-    #     name=users.json_column["objects"]['name']
-    #     print(id)
-    #     print(key)
-    #     print(myarray)
-    #     print(type(myarray))
-    #     print(objects)
-    #     print(name)
-    #     myarray.insert(0,1111)
-    #     print(myarray,'//')
-    #     # user_data['name'] = users.json_column['objects']['name']          objects name change
-    #     # users.json_column={"key":key,"myarray":myarray,"objects":{"name":"nazmul"}}  # only name filed change
-    #     # users.json_column={"key":key,"myarray":myarray,"objects":{"name":name}}  # only array filed value add
-    #     print(users.json_column,'..............')
-    #     user = Example.query.filter(Example.id==4).update({"json_column":{"key":key,"myarray":myarray,"objects":{"name":name}}})
-    #     print(user)
-    #     # print(users.json_column['objects']['name'])
-    #     # print(users.book_info,'////')
-    #     # user_data['name'] ="abdullah"
-
-    #     # output = []
-        
-    #     # output.append(user_data)
-    #     # db.session.add(users)
-    #     db.session.commit()
-
-    #     return "update sucvcesfully"
-
-        
+    return jsonify({'message' : 'role  deleted Succesfully!'})
