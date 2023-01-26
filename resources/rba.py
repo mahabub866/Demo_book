@@ -34,17 +34,47 @@ class Role(MethodView):
     # @blp.response(201, PlainRba1Schema)
     def post(self,store_data):
         data= RBA.query.first()
+        
+        print(store_data)
         name=store_data['name']
-        active=store_data['active']
-        user_management=store_data['user_management']
-        account_management=store_data['account_management']
-        store_management=store_data['store_management']
-        support_management=store_data['support_management']
+        # active=store_data['active']
+        # user_management=store_data['user_management']
+        # account_management=store_data['account_management']
+        # store_management=store_data['store_management']
+        # support_management=store_data['support_management']
+        # x=str(store_data)
+        keys = store_data.keys()
+        # values = store_data.values()
+        user_management=None
+        store_management=None
+        support_management=None
+        account_management=None
+        active=True
+        # print(keys)
+        # print(values)
+        # print(keys=='store_management','ssssssssssss')
+        for i in keys:
+            # print(i,'.............../////....')
+            if i =='user_management':
+                user_management=True
+            elif i=='store_management':
+                store_management=True
+            elif i=='support_management':
+                support_management=True
+            elif i=='account_management':
+                account_management=True
+            elif i=='active':
+                active=True
+    
+               
+        # print('store print')
+
         
         if data is not None:
 
             role = RBA(name=name,active=active,role={"user_management" : user_management , "account_management":account_management ,"store_management":store_management , "support_management" : support_management})
         # example2 = Example(json_column={"key" : "newvalue", "myarray" : [23, 676, 45, 88, 99], "objects" : {"name" : "Brian"}})
+            # print(role)
             db.session.add(role)
             db.session.commit()
            

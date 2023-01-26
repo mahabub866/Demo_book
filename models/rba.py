@@ -6,5 +6,5 @@ class RBA(db.Model):
     
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80), unique=True, nullable=False)
-    active=db.Column(db.Boolean,default=True)
+    active=db.Column(db.Boolean,nullable=True)
     role = db.Column(JSON)

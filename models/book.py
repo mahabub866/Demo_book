@@ -9,8 +9,8 @@ class BookModel(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80), unique=True, nullable=False)
-    status = db.Column(db.Boolean)
-    create_at=db.Column(db.DateTime, default=datetime.datetime.utcnow())
+    status = db.Column(db.Boolean,nullable=True)
+    create_at=db.Column(db.DateTime, nullable=True)
     book_info = db.Column(JSON)
     data = db.Column(MutableList.as_mutable(ARRAY(db.Integer)))
     

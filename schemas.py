@@ -19,7 +19,7 @@ class PlainRba1Schema(Schema):
 class PlainRbaSchema(Schema):
     id = fields.Int(dump_only=True)
     name = fields.Str(required=True)
-    active = fields.Boolean(required=False)
+    active = fields.Boolean(required=False,default=None)
     user_management=fields.Boolean(required=False,default=None)
     account_management=fields.Boolean(required=False,default=None)
     store_management=fields.Boolean(required=False,default=None)
