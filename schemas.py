@@ -69,5 +69,5 @@ class RoleStatusUpdateSchema(Schema):
    
     
 role_schema=RoleUpdateSchema()
-role_schema_main=RoleSchema()
+role_schema_main= ()
 role_status_schema=RoleStatusUpdateSchema()
